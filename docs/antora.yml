@@ -1,0 +1,6 @@
+name: openshift4-networking
+title: openshift4-networking
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/partials/nav.adoc

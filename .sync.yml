@@ -1,0 +1,15 @@
+:global:
+  componentName: openshift4-networking
+  feature_goldenTests: true
+  testMatrix:
+    key: instance
+    entries:
+      - defaults
+
+docs/antora.yml:
+  name: openshift4-networking
+  title: openshift4-networking
+
+.github/workflows/test.yaml:
+  test_makeTarget: test -e instance=${{ matrix.instance }}
+  goldenTest_makeTarget: golden-diff -e instance=${{ matrix.instance }}
