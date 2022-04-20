@@ -1,4 +1,7 @@
 parameters:
   openshift4_networking:
     =_metadata: {}
-    namespace: syn-openshift4-networking
+    namespace: openshift-multus
+
+    nodeSelector:
+      node-role.kubernetes.io/infra: ''

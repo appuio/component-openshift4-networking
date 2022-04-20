@@ -6,14 +6,28 @@ The parent key for all of the following parameters is `openshift4_networking`.
 
 [horizontal]
 type:: string
-default:: `syn-openshift4-networking`
+default:: `openshift-multus`
 
-The namespace in which to deploy this component.
+The namespace in which OpenShift Multus is deployed.
+
+
+== `nodeSelector`
+
+[horizontal]
+type:: dictionary
+default::
++
+[source,yaml]
+----
+node-role.kubernetes.io/infra: ''
+----
+
+Node selector for the non-DaemonSet OpenShift Multus workloads.
 
 
 == Example
 
 [source,yaml]
 ----
-namespace: example-namespace
+namespace: openshift-multus
 ----
