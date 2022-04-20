@@ -22,7 +22,7 @@ default::
 node-role.kubernetes.io/infra: ''
 ----
 
-Node selector for the non-DaemonSet OpenShift Multus workloads.
+Node selector for the non-DaemonSet OpenShift networking workloads.
 
 
 == Example
