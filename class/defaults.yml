@@ -1,7 +1,21 @@
 parameters:
   openshift4_networking:
     =_metadata: {}
-    namespace: openshift-multus
 
-    nodeSelector:
+    defaultNodeSelector:
       node-role.kubernetes.io/infra: ''
+
+    patches:
+      ip-reconciler:
+        target:
+          kind: CronJob
+          apiVersion: batch/v1
+          name: ip-reconciler
+          namespace: openshift-multus
+        patch:
+          spec:
+            jobTemplate:
+              spec:
+                template:
+                  spec:
+                    nodeSelector: ${openshift4_networking:defaultNodeSelector}

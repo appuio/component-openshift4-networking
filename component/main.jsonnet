@@ -7,26 +7,29 @@ local resourceLocker = import 'lib/resource-locker.libjsonnet';
 local params = inv.parameters.openshift4_networking;
 
 
-local patch =
-  resourceLocker.Patch(kube._Object('batch/v1', 'CronJob', 'ip-reconciler') {
-    metadata+: {
-      namespace: params.namespace,
-    },
-  }, {
-    spec: {
-      jobTemplate: {
-        spec: {
-          template: {
-            spec: {
-              nodeSelector: params.nodeSelector,
-            },
-          },
-        },
-      },
-    },
-  });
+local patches =
+  std.flattenArrays(
+    std.filterMap(
+      function(n) n != null && params.patches[n] != null,
+      function(n)
+        local p = params.patches[n];
+        resourceLocker.Patch(
+          kube._Object(p.target.apiVersion, p.target.kind, p.target.name)
+          + if p.target.namespace != null then
+            {
+              metadata+: {
+                namespace: p.target.namespace,
+              },
+            }
+          else
+            {}
+          , p.patch
+        ),
+      std.objectFields(params.patches)
+    )
+  );
 
 // Define outputs below
 {
-  '10_node_selector_patch': patch,
+  '10_node_selector_patch': patches,
 }

@@ -2,16 +2,8 @@
 
 The parent key for all of the following parameters is `openshift4_networking`.
 
-== `namespace`
 
-[horizontal]
-type:: string
-default:: `openshift-multus`
-
-The namespace in which OpenShift Multus is deployed.
-
-
-== `nodeSelector`
+== `defaultNodeSelector`
 
 [horizontal]
 type:: dictionary
@@ -25,9 +17,32 @@ node-role.kubernetes.io/infra: ''
 Node selector for the non-DaemonSet OpenShift networking workloads.
 
 
-== Example
+== `patches`
 
+[horizontal]
+type:: dictionary
+default:: https://github.com/appuio/component-openshift4-networking/blob/master/class/defaults.yml[See `class/defaults.yml`]
+
+Defines the patches to apply to the OpenShift networking components.
+Patches can be removed in the hierarchy by setting the value to `null`.
+
+The schema is defined as follows:
 [source,yaml]
 ----
-namespace: openshift-multus
+ip-reconciler: <1>
+  target: <2>
+    kind: CronJob
+    apiVersion: batch/v1
+    name: ip-reconciler
+    namespace: openshift-multus
+  patch: <3>
+    spec:
+      jobTemplate:
+        spec:
+          template:
+            spec:
+              nodeSelector: ${openshift4_networking:defaultNodeSelector}
 ----
+<1> Name in hierarchy
+<2> Object the patch is applied to. Consists of kind, apiVersion, name, and optionally namespace.
+<3> Patch to apply
