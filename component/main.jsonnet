@@ -31,5 +31,6 @@ local patches =
 
 // Define outputs below
 {
+  '00_namespace': kube.Namespace(params.namespace),
   '10_node_selector_patch': patches,
 }
