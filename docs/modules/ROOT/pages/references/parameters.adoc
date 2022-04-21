@@ -3,6 +3,17 @@
 The parent key for all of the following parameters is `openshift4_networking`.
 
 
+== `namespace`
+
+[horizontal]
+type:: string
+default:: `openshift-networking`
+
+The namespace in which to deploy this component.
+
+NOTE: The component doesn't manage the namespace.
+
+
 == `defaultNodeSelector`
 
 [horizontal]

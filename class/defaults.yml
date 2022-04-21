@@ -1,6 +1,7 @@
 parameters:
   openshift4_networking:
     =_metadata: {}
+    namespace: openshift-networking
 
     defaultNodeSelector:
       node-role.kubernetes.io/infra: ''
