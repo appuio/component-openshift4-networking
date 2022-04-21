@@ -11,8 +11,6 @@ default:: `openshift-networking`
 
 The namespace in which to deploy this component.
 
-NOTE: The component doesn't manage the namespace.
-
 
 == `defaultNodeSelector`
 
