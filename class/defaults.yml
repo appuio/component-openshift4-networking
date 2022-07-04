@@ -6,6 +6,11 @@ parameters:
     defaultNodeSelector:
       node-role.kubernetes.io/infra: ''
 
+    monitoring:
+      enabled: true
+      instance: null
+      enableServiceMonitors: {}
+
     patches:
       ip-reconciler:
         target:
