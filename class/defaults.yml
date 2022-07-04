@@ -9,7 +9,13 @@ parameters:
     monitoring:
       enabled: true
       instance: null
-      enableServiceMonitors: {}
+      enableServiceMonitors:
+        multus-admission-controller: true
+        multus-network: true
+        network-check-source: true
+        openshift-sdn: true
+        ovn-master: true
+        ovn-node: true
 
     patches:
       ip-reconciler:
