@@ -168,6 +168,18 @@ if syn_metrics then
       kube.Namespace(nsName),
       instance=promInstance
     ),
+    [if params.monitoring.enableServiceMonitors['network-check-source']
+    then '20_metrics_networkpolicy']: [
+      // openshift-multus and openshift-sdn don't have default
+      // networkpolicies, and openshift-ovn-kubernetes metrics are exposed on
+      // hostport. TBD: do we need additional networkpolicy on Cilium-enabled
+      // clusters?
+      prom.NetworkPolicy(instance=promInstance) {
+        metadata+: {
+          namespace: 'openshift-network-diagnostics',
+        },
+      },
+    ],
     '20_metrics_servicemonitors': std.filter(
       function(it) it != null,
       [
