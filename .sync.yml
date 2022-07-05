@@ -5,6 +5,7 @@
     key: instance
     entries:
       - defaults
+      - syn-monitoring
 
 docs/antora.yml:
   name: openshift4-networking
