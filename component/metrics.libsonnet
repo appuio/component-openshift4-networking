@@ -195,5 +195,8 @@ if syn_metrics then
     ),
   }
 else
-  {
-  }
+  std.trace(
+    'Monitoring disabled or component `prometheus` not present, '
+    + 'not deploying ServiceMonitors',
+    {}
+  )
