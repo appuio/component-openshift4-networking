@@ -80,9 +80,14 @@ metadata:
 spec:
   patches:
     - id: patch1
-      patchTemplate: "\"spec\":\n  \"jobTemplate\":\n    \"spec\":\n      \"template\"\
-        :\n        \"spec\":\n          \"nodeSelector\":\n            \"node-role.kubernetes.io/infra\"\
-        : \"\""
+      patchTemplate: |-
+        "spec":
+          "jobTemplate":
+            "spec":
+              "template":
+                "spec":
+                  "nodeSelector":
+                    "node-role.kubernetes.io/infra": ""
       patchType: application/strategic-merge-patch+json
       targetObjectRef:
         apiVersion: batch/v1

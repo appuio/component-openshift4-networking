@@ -1,0 +1,25 @@
+{
+  "template": "https://github.com/projectsyn/commodore-component-template.git",
+  "commit": "3e1ac242633b3345621ba9f2b72f8dfea8e6ac4a",
+  "checkout": "main",
+  "context": {
+    "cookiecutter": {
+      "name": "OpenShift 4 Networking",
+      "slug": "openshift4-networking",
+      "parameter_key": "openshift4_networking",
+      "test_cases": "defaults syn-monitoring",
+      "add_lib": "n",
+      "add_pp": "n",
+      "add_golden": "y",
+      "add_matrix": "y",
+      "add_go_unit": "n",
+      "copyright_holder": "VSHN AG <info@vshn.ch>",
+      "copyright_year": "2022",
+      "github_owner": "appuio",
+      "github_name": "component-openshift4-networking",
+      "github_url": "https://github.com/appuio/component-openshift4-networking",
+      "_template": "https://github.com/projectsyn/commodore-component-template.git"
+    }
+  },
+  "directory": null
+}
