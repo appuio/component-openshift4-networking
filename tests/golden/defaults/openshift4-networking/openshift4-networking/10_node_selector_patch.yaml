@@ -1,14 +1,15 @@
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
-  annotations: {}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
   name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
   namespace: syn-patch-operator
 spec:
   patches:
-    patch1:
+    openshift-multus-ip-reconciler-c6a5ed1ce17737d-patch:
       patchTemplate: |-
         "spec":
           "jobTemplate":

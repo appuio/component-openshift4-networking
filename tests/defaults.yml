@@ -2,7 +2,7 @@ parameters:
   kapitan:
     dependencies:
       - type: https
-        source: https://raw.githubusercontent.com/projectsyn/component-patch-operator/v1.0.0/lib/patch-operator.libsonnet
+        source: https://raw.githubusercontent.com/projectsyn/component-patch-operator/v1.2.0/lib/patch-operator.libsonnet
         output_path: vendor/lib/patch-operator.libsonnet
 
   patch_operator:
