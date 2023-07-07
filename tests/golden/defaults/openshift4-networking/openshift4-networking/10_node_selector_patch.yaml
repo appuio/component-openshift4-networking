@@ -1,85 +1,14 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    name: ip-reconciler-manager
-  name: ip-reconciler-manager
-  namespace: syn-resource-locker
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  labels:
-    name: syn-resource-locker-ip-reconciler-manager
-  name: syn-resource-locker-ip-reconciler-manager
-rules:
-  - apiGroups:
-      - batch
-    resources:
-      - cronjobs
-    verbs:
-      - list
-      - watch
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  labels:
-    name: syn-resource-locker-ip-reconciler-manager
-  name: syn-resource-locker-ip-reconciler-manager
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: syn-resource-locker-ip-reconciler-manager
-subjects:
-  - kind: ServiceAccount
-    name: ip-reconciler-manager
-    namespace: syn-resource-locker
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  labels:
-    name: syn-resource-locker-ip-reconciler-manager
-  name: syn-resource-locker-ip-reconciler-manager
-  namespace: openshift-multus
-rules:
-  - apiGroups:
-      - batch
-    resources:
-      - cronjobs
-    verbs:
-      - get
-      - patch
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  labels:
-    name: syn-resource-locker-ip-reconciler-manager
-  name: syn-resource-locker-ip-reconciler-manager
-  namespace: openshift-multus
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: syn-resource-locker-ip-reconciler-manager
-subjects:
-  - kind: ServiceAccount
-    name: ip-reconciler-manager
-    namespace: syn-resource-locker
----
 apiVersion: redhatcop.redhat.io/v1alpha1
-kind: ResourceLocker
+kind: Patch
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  annotations: {}
   labels:
-    name: openshift-multus-ip-reconciler
-  name: openshift-multus-ip-reconciler
-  namespace: syn-resource-locker
+    name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
+  name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
+  namespace: syn-patch-operator
 spec:
   patches:
-    - id: patch1
+    patch1:
       patchTemplate: |-
         "spec":
           "jobTemplate":
@@ -95,4 +24,4 @@ spec:
         name: ip-reconciler
         namespace: openshift-multus
   serviceAccountRef:
-    name: ip-reconciler-manager
+    name: patch-sa

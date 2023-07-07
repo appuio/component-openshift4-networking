@@ -2,7 +2,7 @@
 local kap = import 'lib/kapitan.libjsonnet';
 local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
-local resourceLocker = import 'lib/resource-locker.libjsonnet';
+local po = import 'lib/patch-operator.libsonnet';
 // The hiera parameters for the component
 local params = inv.parameters.openshift4_networking;
 
@@ -12,7 +12,7 @@ local patches =
       function(n) n != null && params.patches[n] != null,
       function(n)
         local p = params.patches[n];
-        resourceLocker.Patch(
+        po.Patch(
           kube._Object(p.target.apiVersion, p.target.kind, p.target.name)
           + if p.target.namespace != null then
             {
