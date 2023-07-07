@@ -6,8 +6,6 @@ local resourceLocker = import 'lib/resource-locker.libjsonnet';
 // The hiera parameters for the component
 local params = inv.parameters.openshift4_networking;
 
-local metrics = import 'metrics.libsonnet';
-
 local patches =
   std.flattenArrays(
     std.filterMap(
@@ -34,4 +32,4 @@ local patches =
 {
   '00_namespace': kube.Namespace(params.namespace),
   '10_node_selector_patch': patches,
-} + metrics
+}

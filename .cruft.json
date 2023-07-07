@@ -7,7 +7,7 @@
       "name": "OpenShift 4 Networking",
       "slug": "openshift4-networking",
       "parameter_key": "openshift4_networking",
-      "test_cases": "defaults syn-monitoring",
+      "test_cases": "defaults",
       "add_lib": "n",
       "add_pp": "n",
       "add_golden": "y",
