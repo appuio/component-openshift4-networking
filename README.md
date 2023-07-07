@@ -1,6 +1,6 @@
-# Commodore Component: Openshift4 Networking
+# Commodore Component: OpenShift 4 Networking
 
-This is a [Commodore][commodore] Component for Openshift4 Networking.
+This is a [Commodore][commodore] Component for OpenShift 4 Networking.
 
 This repository is part of Project Syn.
 For documentation on Project Syn and this component, see https://syn.tools.
