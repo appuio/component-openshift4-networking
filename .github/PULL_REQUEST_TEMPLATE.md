@@ -17,6 +17,6 @@ review the checklist.
 Contributors guide: ./CONTRIBUTING.md
 
 Remove items that do not apply. For completed items, change [ ] to [x].
-These things are not required to open a PR and can be done afterwards,
+These things are not required to open a PR and can be done afterwards
 while the PR is open.
 -->
