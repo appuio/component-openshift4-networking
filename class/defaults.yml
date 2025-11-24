@@ -2,6 +2,10 @@ parameters:
   openshift4_networking:
     =_metadata:
       multi_tenant: true
+      deprecated: true
+      deprecation_notice: >-
+        The functionality of this component is no longer needed.
+
     namespace: openshift-networking
 
     defaultNodeSelector:
