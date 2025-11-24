@@ -1,28 +1,99 @@
-apiVersion: redhatcop.redhat.io/v1alpha1
-kind: Patch
+apiVersion: v1
+kind: ServiceAccount
 metadata:
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    syn.tools/source: https://github.com/appuio/component-openshift4-networking.git
   labels:
-    name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
-  name: openshift-multus-ip-reconciler-c6a5ed1ce17737d
-  namespace: syn-patch-operator
+    app.kubernetes.io/component: openshift4-networking
+    app.kubernetes.io/managed-by: espejote
+    app.kubernetes.io/part-of: syn
+  name: config-batch-cronjob-ip-reconciler
+  namespace: openshift-multus
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    syn.tools/source: https://github.com/appuio/component-openshift4-networking.git
+  labels:
+    app.kubernetes.io/component: openshift4-networking
+    app.kubernetes.io/managed-by: espejote
+    app.kubernetes.io/part-of: syn
+  name: syn-espejote:config-batch-cronjob-ip-reconciler
+  namespace: openshift-multus
+rules:
+  - apiGroups:
+      - batch
+    resourceNames:
+      - ip-reconciler
+    resources:
+      - configmaps
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    syn.tools/source: https://github.com/appuio/component-openshift4-networking.git
+  labels:
+    app.kubernetes.io/component: openshift4-networking
+    app.kubernetes.io/managed-by: espejote
+    app.kubernetes.io/part-of: syn
+  name: syn-espejote:config-batch-cronjob-ip-reconciler
+  namespace: openshift-multus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: syn-espejote:config-batch-cronjob-ip-reconciler
+subjects:
+  - kind: ServiceAccount
+    name: config-batch-cronjob-ip-reconciler
+    namespace: openshift-multus
+---
+apiVersion: espejote.io/v1alpha1
+kind: ManagedResource
+metadata:
+  annotations:
+    syn.tools/source: https://github.com/appuio/component-openshift4-networking.git
+  labels:
+    app.kubernetes.io/component: openshift4-networking
+    app.kubernetes.io/managed-by: espejote
+    app.kubernetes.io/name: config-openshift-io-ingresses-cluster-manager
+    app.kubernetes.io/part-of: syn
+  name: config-openshift-io-ingresses-cluster-manager
+  namespace: openshift-multus
 spec:
-  patches:
-    openshift-multus-ip-reconciler-c6a5ed1ce17737d-patch:
-      patchTemplate: |-
-        "spec":
-          "jobTemplate":
-            "spec":
-              "template":
-                "spec":
-                  "nodeSelector":
-                    "node-role.kubernetes.io/infra": ""
-      patchType: application/strategic-merge-patch+json
-      targetObjectRef:
+  applyOptions:
+    force: true
+  serviceAccountRef:
+    name: config-batch-cronjob-ip-reconciler
+  template: |-
+    {
+        "apiVersion": "batch/v1",
+        "kind": "CronJob",
+        "metadata": {
+            "name": "ip-reconciler",
+            "namespace": "openshift-multus"
+        },
+        "spec": {
+            "jobTemplate": {
+                "spec": {
+                    "template": {
+                        "spec": {
+                            "nodeSelector": {
+                                "node-role.kubernetes.io/infra": ""
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  triggers:
+    - name: cronjob
+      watchResource:
         apiVersion: batch/v1
         kind: CronJob
         name: ip-reconciler
         namespace: openshift-multus
-  serviceAccountRef:
-    name: patch-sa
