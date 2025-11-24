@@ -1,3 +1,7 @@
+# :warning: Repo Archive Notice
+
+As of November 24, 2025, this component is deprecated and will no longer be updated.
+
 # Commodore Component: openshift4-networking
 
 This is a [Commodore][commodore] Component for openshift4-networking.
